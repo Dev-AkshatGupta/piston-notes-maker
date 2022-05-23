@@ -28,7 +28,7 @@ function LogInForm({children}) {
   }
   function clickHandler(e) {
     //  to prevent initial refreshing of the page
-    e.preventDefault(e);
+    e.preventDefault();
     console.log(passwordRegEx.test(details.password));
     if(validateDetails(details)){dispatch(login(details));}
   }
