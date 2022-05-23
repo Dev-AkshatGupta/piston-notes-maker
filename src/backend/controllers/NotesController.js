@@ -1,6 +1,7 @@
 import { Response } from "miragejs";
 import { requiresAuth } from "../utils/authUtils";
 import { v4 as uuid } from "uuid";
+import jwt_decode from "jwt-decode";
 
 /**
  * All the routes related to Notes are present here.
@@ -193,6 +194,36 @@ export const trashNoteHandler = function (schema, request) {
     user.trash.push({ ...trashedNote });
     this.db.users.update({ _id: user._id }, user);
     return new Response(201, {}, { trash: user.trash, notes: user.notes });
+  } catch (error) {
+    return new Response(
+      500,
+      {},
+      {
+        error,
+      }
+    );
+  }
+};
+
+
+export const verifyUser = function (schema, request) {
+  const { encodedToken } = JSON.parse(request.requestBody);
+  const decodedToken = jwt_decode(
+    encodedToken,
+    process.env.REACT_APP_JWT_SECRET
+  );
+  try {
+    if (decodedToken) {
+      const user = this.db.users.findBy({ username: decodedToken.username });
+      if (user) {
+        return new Response(200, {}, { user });
+      }
+    }
+    return new Response(
+      401,
+      {},
+      { errors: ["The token is invalid. Unauthorized access error."] }
+    );
   } catch (error) {
     return new Response(
       500,
