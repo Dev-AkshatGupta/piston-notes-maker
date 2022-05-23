@@ -114,8 +114,6 @@ export const userProfilehandler = function (schema, request) {
   return new Response(200, {}, { user });
 };
 
-
-
 /**
  * This handler handles user verification.
  * send POST Request at /api/auth/verify

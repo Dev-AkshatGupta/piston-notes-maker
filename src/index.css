@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --PRIMARY: rgb(255, 255, 255);
   /* --secondary-color:; */
