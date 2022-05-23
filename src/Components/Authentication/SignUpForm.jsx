@@ -1,19 +1,41 @@
 import React, { useState } from "react";
 import "./authentication.css";
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { signUp } from "Redux/Reducers-Redux/authSlice";
-function SignUpForm({children}) {
+import { notifyError } from "./../../Utilities/Notifications";
+import { validate } from "uuid";
+function SignUpForm({ children }) {
   const [details, setDetails] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
     password: "",
   });
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
+  const passwordRegEx =
+    /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
+    function validateDetails(details) {
+    if (
+      details.name === "" ||
+      details.username === "" ||
+      details.password === ""
+    ) {
+      notifyError("Fill all the fields");
+      return false;
+    }
+
+    else if (passwordRegEx.test(details.password)){
+      return passwordRegEx.test(details.password);
+    } 
+    else {
+     notifyError("Please fill password correctly");
+      return false;}
+  }
   function clickHandler(e) {
     //  to prevent initial refreshing of the page
     e.preventDefault();
-dispatch(signUp(details));
+    if (validateDetails(details)) {
+      dispatch(signUp(details));
+     };
   }
   const [viewPassword, setViewPassword] = useState(false);
   return (
@@ -29,7 +51,6 @@ dispatch(signUp(details));
           type="text"
           name="name"
           className="w-full bg-white rounded border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-         
           value={details.name}
           onChange={(e) => setDetails({ ...details, name: e.target.value })}
         />
@@ -65,13 +86,13 @@ dispatch(signUp(details));
         <i
           className="fa fa-eye text text-center mb-1"
           aria-hidden="true"
-          onClick={(e) => setViewPassword(!viewPassword)}
+          onClick={() => setViewPassword(!viewPassword)}
         ></i>
       )}
       {viewPassword && (
         <i
           className="fas fa-eye-slash text text-center mb-1"
-          onClick={(e) => setViewPassword(!viewPassword)}
+          onClick={() => setViewPassword(!viewPassword)}
         ></i>
       )}
 
@@ -81,8 +102,7 @@ dispatch(signUp(details));
       >
         Sign-Up
       </button>
-    {children}
-   
+      {children}
     </>
   );
 }

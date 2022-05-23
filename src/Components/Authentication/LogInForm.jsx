@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./authentication.css";
 import { login } from "Redux/Reducers-Redux/authSlice";
 import { useDispatch } from "react-redux";
+import {notifyError} from "./../../Utilities/Notifications";
 function LogInForm({children}) {
   const [viewPassword, setViewPassword] = useState(false);
   const [details, setDetails] = useState({
@@ -9,10 +10,27 @@ function LogInForm({children}) {
     password: "",
   });
   const dispatch = useDispatch();
+  const passwordRegEx =
+    /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
+  function validateDetails(details) {
+    if (
+      details.username === "" ||
+      details.password === ""
+    ) {
+      notifyError("Fill all the fields");
+      return false;
+    } else if (passwordRegEx.test(details.password)) {
+      return passwordRegEx.test(details.password);
+    } else {
+      notifyError("Please fill password correctly");
+      return false;
+    }
+  }
   function clickHandler(e) {
     //  to prevent initial refreshing of the page
-    e.preventDefault(details);
-    dispatch(login(details));
+    e.preventDefault(e);
+    console.log(passwordRegEx.test(details.password));
+    if(validateDetails(details)){dispatch(login(details));}
   }
 
   return (

@@ -13,8 +13,10 @@ export const login = createAsyncThunk("auth/login", async (userDetails) => {
       username: userDetails.username,
       password: userDetails.password,
     });
+
     return response.data;
   } catch (error) {
+    notifyError(error.response.data.error[0]);
     console.log(error.response);
   }
 });
@@ -27,6 +29,7 @@ export const signUp = createAsyncThunk("auth/signUp", async (userDetails) => {
     });
     return response.data;
   } catch (error) {
+    notifyError(error.response.data.error[0]);
     console.log(error.response);
   }
 });
