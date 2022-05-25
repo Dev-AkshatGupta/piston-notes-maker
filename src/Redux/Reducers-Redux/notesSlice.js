@@ -18,7 +18,7 @@ export const getUsersData = createAsyncThunk(
         "/api/user",
         {},
         {
-          headers: { authoriazation: encodedToken },
+          headers: { authorization: encodedToken },
         }
       );
       console.log(data);
@@ -88,11 +88,191 @@ export const editNote = createAsyncThunk(
       );
       console.log(data);
       return data;
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      notifyWarn(error.response.data.errors[0]);
+    }
   }
 );
 
-export const deleteNote=createAsyncThunk("notes/deleteNote",async(details,)=>{})
+export const deleteNote = createAsyncThunk(
+  "notes/deleteNote",
+  async (details, { rejectWithValue }) => {
+    try {
+      const { notesId } = details;
+      const encodedToken = localStorage.get("token");
+      const { data } = await axios.delete(`/api/notes/${notesId}`, {
+        headers: { authorization: encodedToken },
+      });
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+      notifyWarn(error.response.data.errors[0]);
+    }
+  }
+);
+
+export const getAllArchives = createAsyncThunk(
+  "notes/getAllArchives",
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get("/api/archives");
+      console.log(data);
+      return data;
+    } catch (error) {
+      notifyWarn(error.response.data.errors[0]);
+      console.log(error);
+    }
+  }
+);
+
+export const postNoteToArchive = createAsyncThunk(
+  "notes/postNoteToArchive",
+  async (details, { rejectWithValue }) => {
+    try {
+      const encodedToken = localStorage.get("token");
+      const { noteId, note } = details;
+      const { data } = await axios.post(
+        `/api/archives/delete/${noteId}`,
+        {
+          note: note,
+        },
+        {
+          headers: { authorization: encodedToken },
+        }
+      );
+      console.log(data);
+      return data;
+    } catch (error) {
+      notifyWarn(error.response.data.errors[0]);
+      console.log(error);
+    }
+  }
+);
+
+export const restoreNoteFromArchive = createAsyncThunk(
+  "notes/restoreNoteFromArchive",
+  async (details, { rejectWithValue }) => {
+    try {
+      const encodedToken = localStorage.get("token");
+      const { noteId, note } = details;
+      const { data } = await axios.post(
+        `/api/archives/restore/${noteId}`,
+        {},
+        {
+          headers: { authorization: encodedToken },
+        }
+      );
+      console.log(data);
+      return data;
+    } catch (error) {
+      notifyWarn(error.response.data.errors[0]);
+      console.log(error);
+    }
+  }
+);
+
+export const deleteFromArchive = createAsyncThunk(
+  "notes/deleteFromArchive",
+  async (details, { rejectWithValue }) => {
+    try {
+      const encodedToken = localStorage.get("token");
+      const { noteId } = details;
+      const { data } = await axios.delete(`/api/archives/delete/${noteId}`, {
+        headers: { authorization: encodedToken },
+      });
+      console.log(data);
+      return data;
+    } catch (error) {
+      notifyWarn(error.response.data.errors[0]);
+      console.log(error);
+    }
+  }
+);
+
+// functions for the trash page
+
+export const getAllTrash = createAsyncThunk(
+  "notes/getAllTrash",
+  async (_, { rejectWithValue }) => {
+    try {
+      const encodedToken = localStorage.getItem("token");
+      const { data } = await axios.get(
+        "/api/trash",
+        {},
+        {
+          headers: { authorization: encodedToken },
+        }
+      );
+      console.log(data);
+      return data;
+    } catch (error) {
+      notifyWarn(error.response.data.errors[0]);
+      console.log(error);
+    }
+  }
+);
+
+export const postNoteToTrash = createAsyncThunk(
+  "notes/postNoteToTrash",
+  async (details, { rejectWithValue }) => {
+    try {
+      const { noteId } = details;
+      const encodedToken = localStorage.getItem("token");
+      const { data } = await axios.post(
+        `/notes/trash/${noteId}`,
+        {},
+        { headeres: { authorization: encodedToken } }
+      );
+      console.log(data);
+      return data;
+    } catch (error) {
+      notifyWarn(error.response.data.errors[0]);
+      console.log(error);
+    }
+  }
+);
+
+export const restoreNoteFromTrash = createAsyncThunk(
+  "notes/restoreNoteFromTrash",
+  async (details, { rejectWithValue }) => {
+    try {
+      const { noteId } = details;
+      const encodedToken = localStorage.getItem("token");
+      const { data } = await axios.post(
+        `/api/trash/restore/${noteId}`,
+        {},
+        {
+          headers: { authorization: encodedToken },
+        }
+      );
+    } catch (error) {
+      notifyWarn(error.response.data.errors[0]);
+      console.log(error);
+    }
+  }
+);
+
+export const deleteNoteFromTrash = createAsyncThunk(
+  "notes/deleteNoteFromTrash",
+  async (details, { rejectWithValue }) => {
+    try {
+      const { noteId } = details;
+      const encodedToken = localStorage.getItem("token");
+      const { data } = await axios.delete(
+        `/api/trash/delete/${noteId}`,
+        {
+          headers: { authorization: encodedToken },
+        }
+      );
+    } catch (error) {
+      notifyWarn(error.response.data.errors[0]);
+      console.log(error);
+    }
+  }
+  
+);
 const notesSlice = createSlice({
   name: "notes",
   initialState,
@@ -120,9 +300,9 @@ const notesSlice = createSlice({
       .addCase(getAllNotes.rejected, (state, action) => {
         state.loadingStates.getAllNotesLoading = false;
       })
-      .addCase(postNote.pending,(state,action)=>{})
-      .addCase(postNote.fulfilled,(state,action)=>{})
-      .addCase(postNote.rejected,(state,action)=>{})
+      .addCase(postNote.pending, (state, action) => {})
+      .addCase(postNote.fulfilled, (state, action) => {})
+      .addCase(postNote.rejected, (state, action) => {});
   },
 });
 // export const {}=notesSlice.actions;
