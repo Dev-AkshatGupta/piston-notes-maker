@@ -42,6 +42,8 @@ export const getAllNotes = createAsyncThunk(
           headers: { authorization: encodedToken },
         }
       );
+      console.log(data);
+      return data;
     } catch (error) {
       notifyError(error.response.data.errors[0]);
       console.log(error.response);
@@ -84,10 +86,13 @@ export const editNote = createAsyncThunk(
           headers: { authorization: encodedToken },
         }
       );
+      console.log(data);
+      return data;
     } catch (error) {}
   }
 );
 
+export const deleteNote=createAsyncThunk("notes/deleteNote",async(details,)=>{})
 const notesSlice = createSlice({
   name: "notes",
   initialState,
@@ -114,7 +119,10 @@ const notesSlice = createSlice({
       })
       .addCase(getAllNotes.rejected, (state, action) => {
         state.loadingStates.getAllNotesLoading = false;
-      });
+      })
+      .addCase(postNote.pending,(state,action)=>{})
+      .addCase(postNote.fulfilled,(state,action)=>{})
+      .addCase(postNote.rejected,(state,action)=>{})
   },
 });
 // export const {}=notesSlice.actions;
