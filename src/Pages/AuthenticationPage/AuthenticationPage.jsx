@@ -51,4 +51,4 @@ const AuthenticationPage = () => {
   );
 };
 
-export default AuthenticationPage;
+export  {AuthenticationPage};

@@ -12,4 +12,4 @@ const PrivateRoutes = () => {
   )
 }
 
-export default PrivateRoutes
+export { PrivateRoutes}

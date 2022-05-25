@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { notifyError, notifyInfo, notifyWarn } from "Utilities/Notifications";
+import { notifyError,  notifyWarn } from "Utilities/Notifications";
+
 const initialState = {
   currentUser: {},
   loadingStates: {
@@ -156,7 +157,7 @@ export const restoreNoteFromArchive = createAsyncThunk(
   async (details, { rejectWithValue }) => {
     try {
       const encodedToken = localStorage.get("token");
-      const { noteId, note } = details;
+      const { noteId } = details;
       const { data } = await axios.post(
         `/api/archives/restore/${noteId}`,
         {},
@@ -247,6 +248,8 @@ export const restoreNoteFromTrash = createAsyncThunk(
           headers: { authorization: encodedToken },
         }
       );
+      console.log(data);
+      return data;
     } catch (error) {
       notifyWarn(error.response.data.errors[0]);
       console.log(error);
@@ -260,19 +263,18 @@ export const deleteNoteFromTrash = createAsyncThunk(
     try {
       const { noteId } = details;
       const encodedToken = localStorage.getItem("token");
-      const { data } = await axios.delete(
-        `/api/trash/delete/${noteId}`,
-        {
-          headers: { authorization: encodedToken },
-        }
-      );
+      const { data } = await axios.delete(`/api/trash/delete/${noteId}`, {
+        headers: { authorization: encodedToken },
+      });
+      console.log(data);
+      return data;
     } catch (error) {
       notifyWarn(error.response.data.errors[0]);
       console.log(error);
     }
   }
-  
 );
+
 const notesSlice = createSlice({
   name: "notes",
   initialState,
@@ -305,5 +307,7 @@ const notesSlice = createSlice({
       .addCase(postNote.rejected, (state, action) => {});
   },
 });
+
 // export const {}=notesSlice.actions;
+
 export default notesSlice.reducer;
