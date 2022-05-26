@@ -1,11 +1,19 @@
-import AuthenticationPage from "Pages/AuthenticationPage/AuthenticationPage";
-import {Routes,Route} from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-
+import { AllRoutes } from "AllRoutes";
+import { checkToken } from "Redux/Reducers-Redux/authSlice";
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkToken());
+  }, []);
+
   return (
     <div className="App">
-      <AuthenticationPage />
+      <AllRoutes />
       <ToastContainer />
     </div>
   );

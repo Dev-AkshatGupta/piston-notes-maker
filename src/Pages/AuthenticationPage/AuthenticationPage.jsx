@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { LogInForm } from "Components/Authentication/LogInForm";
-import { SignUpForm } from "Components/Authentication/SignUpForm";
 import { Footer } from "Components/Footer/Footer";
-
+import { LogInForm,SignUpForm } from "Components";
 const AuthenticationPage = () => {
   const [formFlag, setFormFlag] = useState(false);
   return (
@@ -53,4 +51,4 @@ const AuthenticationPage = () => {
   );
 };
 
-export default AuthenticationPage;
+export  {AuthenticationPage};
