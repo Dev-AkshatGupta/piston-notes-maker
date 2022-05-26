@@ -9,7 +9,6 @@ function App() {
 
   useEffect(() => {
     dispatch(checkToken());
-    
   }, []);
 
   return (

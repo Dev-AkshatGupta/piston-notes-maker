@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { notifyError,  notifyWarn } from "Utilities/Notifications";
+import { notifyError, notifyWarn } from "Utilities/Notifications";
 
 const initialState = {
   currentUser: {},
@@ -9,6 +9,7 @@ const initialState = {
   },
   allNotes: [],
 };
+// Please ignore all the conoles on the page these all the functions need to be checked
 
 export const getUsersData = createAsyncThunk(
   "notes/getUserData",
@@ -334,7 +335,7 @@ const notesSlice = createSlice({
       .addCase(restoreNoteFromTrash.rejected, (state, action) => {})
       .addCase(deleteNoteFromTrash.pending, (state, action) => {})
       .addCase(deleteNoteFromTrash.fulfilled, (state, action) => {})
-      .addCase(deleteNoteFromTrash.rejected, (state, action) => {})
+      .addCase(deleteNoteFromTrash.rejected, (state, action) => {});
   },
 });
 
