@@ -1,20 +1,19 @@
-import {AuthenticationPage} from "Pages";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import {AllRoutes}from "AllRoutes";
-
+import { AllRoutes } from "AllRoutes";
+import { checkToken } from "Redux/Reducers-Redux/authSlice";
 function App() {
-  
-  const currentUser=useSelector(state=>state.auth.currentUser);
-  const location=useLocation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   return (
     <div className="App">
-{/* {location.pathName!=="/" && } */}
-      <AllRoutes/>
-      <AuthenticationPage/>
+      <AllRoutes />
       <ToastContainer />
     </div>
   );

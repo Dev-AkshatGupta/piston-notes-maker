@@ -128,7 +128,8 @@ export const verifyUser = function (schema, request) {
   );
   try {
     if (decodedToken) {
-      const user = this.db.users.findBy({ username: decodedToken.username });
+      // const user = this.db.users.findBy({ username: decodedToken.username });
+      const user = this.db.users.findBy({ email: decodedToken.email });
       if (user) {
         return new Response(200, {}, { user });
       }
