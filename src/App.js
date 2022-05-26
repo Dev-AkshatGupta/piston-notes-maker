@@ -8,7 +8,8 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    checkToken();
+    dispatch(checkToken());
+    
   }, []);
 
   return (
