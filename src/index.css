@@ -286,3 +286,17 @@ html::-webkit-scrollbar-track {
 }
 .align-self-center{align-self:center}
 .aside-display{display: block;}
+
+
+/* page layout */
+.layout {
+  display: grid;
+  grid-template-columns: 275px auto 350px;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.layout__main{
+border-right: solid .25px var(--SLATE-300);
+margin-right: 2px;
+}
