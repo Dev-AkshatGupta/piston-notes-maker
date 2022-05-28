@@ -100,7 +100,7 @@ function LeftAside() {
             <div className={`${styles.banner_bottom} my-3`}>
               <div className={`${styles.bottom_profile}`}>
                 <div className={`${styles.profile}`}>
-                  <Link
+                  {/* <Link
                     className="avatar avatar-sm"
                     to={`/profilePage/${currentUser?.id}`}
                   >
@@ -108,7 +108,7 @@ function LeftAside() {
                       src={currentUser?.profilePhoto?.chosen}
                       alt="Profile photo"
                     />
-                  </Link>
+                  </Link> */}
                   <p>{currentUser?.username}</p>
                   <span
                     onClick={() => {

@@ -1,5 +1,6 @@
 import React from 'react'
 import { LeftAside,RightAside } from 'Components';
+import TextEditor from 'Components/TextEditor/TextEditor';
 const HomePage = () => {
   return (
     <div className="layout">
@@ -7,9 +8,7 @@ const HomePage = () => {
         <LeftAside />
       </div>
       <div className="layout__main relative">
-       
-
-        <div className="empty"></div>
+       <TextEditor/>
        
      
         
