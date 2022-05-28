@@ -1,6 +1,8 @@
 import React from 'react'
-
+import { useDispatch } from 'react-redux';
+import {displayModal} from "Redux/Reducers-Redux/notesSlice";
 const AddNoteModal = ({ setModalDisplay, children, textArea }) => {
+    const dispatch=useDispatch();
   return (
     <section>
       <div
@@ -33,7 +35,7 @@ const AddNoteModal = ({ setModalDisplay, children, textArea }) => {
          "
         >
           <h3 className="font-bold text-dark text-xl sm:text-2xl pb-2">
-            Edit details
+            Post note
           </h3>
           <span className="inline-block bg-primary h-1 w-[90px] mx-auto rounded mb-6"></span>
           {textArea}
@@ -55,7 +57,7 @@ const AddNoteModal = ({ setModalDisplay, children, textArea }) => {
                   transition
                   btn
                   "
-                onClick={() => setModalDisplay((display) => !display)}
+                onClick={() => dispatch(displayModal())}
               >
                 Cancel
               </button>

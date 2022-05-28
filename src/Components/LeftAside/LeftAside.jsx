@@ -7,6 +7,7 @@ import { BsGear } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
 import { CgProfile } from "react-icons/cg";
 import { logOut } from "./../../Redux/Reducers-Redux/authSlice";
+import {displayModal} from "Redux/Reducers-Redux/notesSlice";
 function LeftAside() {
   const currentUser = useSelector((state) => state?.auth?.currentUser);
   const dispatch = useDispatch();
@@ -94,21 +95,20 @@ function LeftAside() {
                       Settings
                     </span>
                   </NavLink>
+                  <button
+                    className="btn"
+                    onClick={() => dispatch(displayModal())}
+                  >
+                    <span className={` ${styles.navigation_text}`}>
+                      Add Note
+                    </span>
+                  </button>
                 </nav>
               </div>
             </div>
             <div className={`${styles.banner_bottom} my-3`}>
               <div className={`${styles.bottom_profile}`}>
                 <div className={`${styles.profile}`}>
-                  {/* <Link
-                    className="avatar avatar-sm"
-                    to={`/profilePage/${currentUser?.id}`}
-                  >
-                    <img
-                      src={currentUser?.profilePhoto?.chosen}
-                      alt="Profile photo"
-                    />
-                  </Link> */}
                   <p>{currentUser?.username}</p>
                   <span
                     onClick={() => {

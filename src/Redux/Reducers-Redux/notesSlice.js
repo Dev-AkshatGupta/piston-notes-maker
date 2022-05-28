@@ -8,6 +8,7 @@ const initialState = {
     getUserDataLoading: false,
   },
   allNotes: [],
+  modalDisplay:false
 };
 // Please ignore all the conoles on the page these all the functions need to be checked
 
@@ -279,7 +280,11 @@ export const deleteNoteFromTrash = createAsyncThunk(
 const notesSlice = createSlice({
   name: "notes",
   initialState,
-  reducers: {},
+  reducers: {
+    displayModal(state){
+state.modalDisplay=!state.modalDisplay;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getUsersData.pending, (state) => {
@@ -339,6 +344,6 @@ const notesSlice = createSlice({
   },
 });
 
-// export const {}=notesSlice.actions;
+export const { displayModal } = notesSlice.actions;
 
 export default notesSlice.reducer;

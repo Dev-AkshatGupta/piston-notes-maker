@@ -1,13 +1,13 @@
 import React, { useState, useRef } from "react";
 import JoditEditor from "jodit-react";
 
-const TextEditor = () => {
+const TextEditor = ({content,setContent}) => {
   const config = {
     removeButtons: ["source"],
     readonly: false, // all options from https://xdsoft.net/jodit/doc/
   };
   const editor = useRef(null);
-  const [content, setContent] = useState("");
+  
   return (
     <JoditEditor
       ref={editor}

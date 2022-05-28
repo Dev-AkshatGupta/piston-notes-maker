@@ -1,6 +1,6 @@
 import React from 'react'
-import { LeftAside,RightAside } from 'Components';
-import TextEditor from 'Components/TextEditor/TextEditor';
+import { LeftAside,RightAside,Note ,Search} from 'Components';
+
 const HomePage = () => {
   return (
     <div className="layout">
@@ -8,10 +8,8 @@ const HomePage = () => {
         <LeftAside />
       </div>
       <div className="layout__main relative">
-       <TextEditor/>
-       
-     
-        
+        <Search/>
+        <Note/>
       </div>
       <RightAside />
     </div>
