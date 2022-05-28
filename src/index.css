@@ -300,3 +300,18 @@ html::-webkit-scrollbar-track {
 border-right: solid .25px var(--SLATE-300);
 margin-right: 2px;
 }
+
+
+/* Global components styles */
+.postInput__content-input {
+  width: 100%;
+  /* height: 10rem; */
+  border: 0px;
+  resize: none;
+  overflow-x: hidden;
+
+}
+
+.postInput__content-input:focus {
+  outline: none;
+}

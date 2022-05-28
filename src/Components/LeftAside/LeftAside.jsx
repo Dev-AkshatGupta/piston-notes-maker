@@ -3,11 +3,12 @@ import styles from "./LeftAside.module.css";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { GiHomeGarage } from "react-icons/gi";
 import { HiHashtag, HiLogout } from "react-icons/hi";
-import { BsGear } from "react-icons/bs";
+import { AiOutlineInbox } from "react-icons/ai";
+import { BsPencilFill } from "react-icons/bs";
+import { ImBin } from "react-icons/im";
 import { useSelector, useDispatch } from "react-redux";
-import { CgProfile } from "react-icons/cg";
 import { logOut } from "./../../Redux/Reducers-Redux/authSlice";
-import {displayModal} from "Redux/Reducers-Redux/notesSlice";
+import { displayModal } from "Redux/Reducers-Redux/notesSlice";
 function LeftAside() {
   const currentUser = useSelector((state) => state?.auth?.currentUser);
   const dispatch = useDispatch();
@@ -43,60 +44,33 @@ function LeftAside() {
                     <span className={` ${styles.navigation_text}`}> Home</span>
                   </NavLink>
                   <NavLink
-                    to="/bookMarkPage"
+                    to="/archive"
                     className={({ isActive }) =>
                       isActive ? `${styles.active_link}` : null
                     }
                   >
                     <span className={`${styles.navigation_svg} `}>
-                      <i className="fal fa-bookmark mr-2"></i>
+                      {/* <i className="fal fa-bookmark mr-2"></i> */}
+                      <AiOutlineInbox />
                     </span>
                     <span className={` ${styles.navigation_text}`}>
-                      BookMark
+                      Archive
                     </span>
                   </NavLink>
                   <NavLink
-                    to="/explore"
+                    to="/trash"
                     className={({ isActive }) =>
                       isActive ? `${styles.active_link}` : null
                     }
                   >
                     <span className={`${styles.navigation_svg} `}>
-                      <HiHashtag />
+                      <ImBin />
                     </span>
-                    <span className={` ${styles.navigation_text}`}>
-                      Explore
-                    </span>
+                    <span className={` ${styles.navigation_text}`}>Trash</span>
                   </NavLink>
 
-                  <NavLink
-                    to={`/profilePage/${currentUser?.id}`}
-                    className={({ isActive }) =>
-                      isActive ? `${styles.active_link}` : null
-                    }
-                  >
-                    <span className={`${styles.navigation_svg} `}>
-                      <CgProfile />
-                    </span>
-                    <span className={` ${styles.navigation_text}`}>
-                      Profile
-                    </span>
-                  </NavLink>
-                  <NavLink
-                    to="/settings"
-                    className={({ isActive }) =>
-                      isActive ? `${styles.active_link}` : null
-                    }
-                  >
-                    <span className={`${styles.navigation_svg} `}>
-                      <BsGear />
-                    </span>
-                    <span className={` ${styles.navigation_text}`}>
-                      Settings
-                    </span>
-                  </NavLink>
                   <button
-                    className="btn"
+                    className="btn  px-1.5 py-1.5 ml-1.5"
                     onClick={() => dispatch(displayModal())}
                   >
                     <span className={` ${styles.navigation_text}`}>

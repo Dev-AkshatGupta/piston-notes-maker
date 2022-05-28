@@ -1,8 +1,8 @@
-import React from 'react'
-import { useDispatch } from 'react-redux';
-import {displayModal} from "Redux/Reducers-Redux/notesSlice";
-const AddNoteModal = ({ setModalDisplay, children, textArea }) => {
-    const dispatch=useDispatch();
+import React from "react";
+import { useDispatch } from "react-redux";
+import { displayModal } from "Redux/Reducers-Redux/notesSlice";
+const AddNoteModal = ({ children, textArea,titleArea }) => {
+  const dispatch = useDispatch();
   return (
     <section>
       <div
@@ -34,12 +34,10 @@ const AddNoteModal = ({ setModalDisplay, children, textArea }) => {
          text-center
          "
         >
-          <h3 className="font-bold text-dark text-xl sm:text-2xl pb-2">
-            Post note
-          </h3>
+          <h3 className="font-bold text-dark text-xl sm:text-2xl pb-2">Note</h3>
+          <div className="my-4">{titleArea}</div>
           <span className="inline-block bg-primary h-1 w-[90px] mx-auto rounded mb-6"></span>
-          {textArea}
-
+          <div className="my-4">{textArea}</div>
           <div className="flex flex-wrap -mx-3">
             <div className="w-1/2 px-3">
               <button
@@ -70,4 +68,4 @@ const AddNoteModal = ({ setModalDisplay, children, textArea }) => {
   );
 };
 
-export default AddNoteModal
+export default AddNoteModal;
