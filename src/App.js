@@ -6,13 +6,15 @@ import { AllRoutes } from "AllRoutes";
 import { checkToken } from "Redux/Reducers-Redux/authSlice";
 import AddNoteModal from "Components/AddNoteModal/AddNoteModal";
 import TextEditor from "Components/TextEditor/TextEditor";
-import { postNote } from "Redux/Reducers-Redux/notesSlice";
+import { postNote, displayModal } from "Redux/Reducers-Redux/notesSlice";
+import {TagInput} from "Components/TagInput/TagInput";
+import { BsPalette } from "react-icons/bs";
 function App() {
   const dispatch = useDispatch();
   const modalDisplay = useSelector((state) => state?.notes?.modalDisplay);
   const [content, setContent] = useState("");
   const [noteTitle, setNoteTitle] = useState("");
-  // const [noteTitle,setNoteTitle]=useState("");
+  const [noteTags,setNoteTags]=useState([]);
   useEffect(() => {
     dispatch(checkToken());
   }, []);
@@ -30,18 +32,19 @@ function App() {
             <textarea
               role="textbox"
               type="text"
-              name="post"
+              name="title"
               className="postInput__content-input"
-              placeholder="Write something in this"
-              rows="3"
+              placeholder="Add notes title"
+              rows="1"
               onChange={(e) => {
                 setNoteTitle(e.target.value);
               }}
               value={noteTitle}
             ></textarea>
           }
+          tagInput={<TagInput arr={noteTags} setArr={setNoteTags} />}
         >
-          {" "}
+
           <button
             className="
                   block
@@ -58,9 +61,12 @@ function App() {
                   btn
                   "
             onClick={() => {
-              dispatch(postNote({ title: noteTitle, content: content }));
+              dispatch(
+                postNote({ title: noteTitle, content: content, tags: noteTags })
+              );
               setContent("");
               setNoteTitle("");
+              dispatch(displayModal());
             }}
           >
             Add note

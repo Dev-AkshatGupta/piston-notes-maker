@@ -59,7 +59,7 @@ export const postNote = createAsyncThunk(
   async (details, { rejectWithValue }) => {
     try {
       const encodedToken = localStorage.getItem("token");
-      const {note,title} = details;
+      console.log(details);
       const { data } = await axios.post(
         "/api/notes",
         { note: details },
@@ -67,7 +67,7 @@ export const postNote = createAsyncThunk(
           headers: { authorization: encodedToken },
         }
       );
-      console.log(data);
+      console.log(data.notes);
       // return data;
     } catch (error) {
       notifyError(error.response.data.errors[0]);

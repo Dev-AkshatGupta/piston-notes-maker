@@ -1,7 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { displayModal } from "Redux/Reducers-Redux/notesSlice";
-const AddNoteModal = ({ children, textArea,titleArea }) => {
+import {BsPalette} from "react-icons/bs"
+const AddNoteModal = ({ children, textArea, titleArea, tagInput }) => {
   const dispatch = useDispatch();
   return (
     <section>
@@ -38,6 +39,8 @@ const AddNoteModal = ({ children, textArea,titleArea }) => {
           <div className="my-4">{titleArea}</div>
           <span className="inline-block bg-primary h-1 w-[90px] mx-auto rounded mb-6"></span>
           <div className="my-4">{textArea}</div>
+          <div className="my-4">{tagInput}</div>
+          <div className="w-1/2 px-3 py-3">{<BsPalette/>}</div>
           <div className="flex flex-wrap -mx-3">
             <div className="w-1/2 px-3">
               <button
@@ -60,6 +63,7 @@ const AddNoteModal = ({ children, textArea,titleArea }) => {
                 Cancel
               </button>
             </div>
+
             <div className="w-1/2 px-3">{children}</div>
           </div>
         </div>
