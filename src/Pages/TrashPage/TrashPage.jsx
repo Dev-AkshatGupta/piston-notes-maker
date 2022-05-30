@@ -1,12 +1,10 @@
 import React from "react";
-import { LeftAside, RightAside, Note, Search } from "Components";
+import { LeftAside, Note, Search } from "Components";
 import { useSelector } from "react-redux";
-import { BsBox } from "react-icons/bs";
 import { MdOutlineRestorePage } from "react-icons/md";
 import { ImBin } from "react-icons/im";
 import { useDispatch } from "react-redux";
 import {
-
  deleteNoteFromTrash,
   restoreNoteFromTrash,
 } from "Redux/Reducers-Redux/notesSlice";
@@ -56,7 +54,6 @@ const TrashPage = () => {
           </Note>
         ))}
       </div>
-      <RightAside />
     </div>
   );
 };

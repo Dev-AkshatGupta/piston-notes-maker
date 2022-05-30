@@ -90,4 +90,4 @@ const AddNoteModal = ({
   );
 };
 
-export default AddNoteModal;
+export {AddNoteModal};

@@ -1,10 +1,7 @@
 import React from "react";
-import { LeftAside, RightAside, Note, Search } from "Components";
+import { LeftAside, Note, Search } from "Components";
 import { useSelector } from "react-redux";
-import { AiOutlinePushpin } from "react-icons/ai";
-
 import { BsBox } from "react-icons/bs";
-
 import { ImBin } from "react-icons/im";
 import { useDispatch } from "react-redux";
 import {
@@ -28,19 +25,6 @@ const ArchivePage = () => {
                 March 28, 2020
               </p>
               <div className="flex justify-evenly w-3/5">
-                <div className="w-8 h-8 rounded-full bg-gray-500 text-white flex items-center justify-center">
-                  <button>
-                    <img
-                      src="https://tuk-cdn.s3.amazonaws.com/can-uploader/single_card_with_title_and_description-svg1.svg"
-                      alt="icon"
-                    />
-                  </button>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-gray-500 text-white flex items-center justify-center">
-                  <button>
-                    <AiOutlinePushpin />
-                  </button>
-                </div>
                 <div className="w-8 h-8 rounded-full bg-gray-500 text-white flex items-center justify-center">
                   <button
                     onClick={() =>
@@ -69,7 +53,6 @@ const ArchivePage = () => {
           </Note>
         ))}
       </div>
-      <RightAside />
     </div>
   );
 };

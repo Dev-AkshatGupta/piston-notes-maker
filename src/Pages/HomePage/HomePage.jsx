@@ -1,7 +1,7 @@
 import React from "react";
-import { LeftAside, RightAside, Note, Search } from "Components";
+import { LeftAside, Note, Search } from "Components";
 import { useSelector } from "react-redux";
-import { AiOutlinePushpin, AiFillPushpin } from "react-icons/ai";
+import { AiOutlinePushpin } from "react-icons/ai";
 import { FiInbox } from "react-icons/fi";
 import { ImBin, ImCross } from "react-icons/im";
 import { useDispatch } from "react-redux";
@@ -83,7 +83,6 @@ const HomePage = () => {
           </Note>
         ))}
       </div>
-      <RightAside />
     </div>
   );
 };

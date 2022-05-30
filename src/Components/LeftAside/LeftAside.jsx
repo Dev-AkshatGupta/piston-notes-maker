@@ -1,10 +1,9 @@
 import React from "react";
 import styles from "./LeftAside.module.css";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink} from "react-router-dom";
 import { GiHomeGarage } from "react-icons/gi";
-import { HiHashtag, HiLogout } from "react-icons/hi";
+import {  HiLogout } from "react-icons/hi";
 import { AiOutlineInbox } from "react-icons/ai";
-import { BsPencilFill } from "react-icons/bs";
 import { ImBin } from "react-icons/im";
 import { useSelector, useDispatch } from "react-redux";
 import { logOut } from "./../../Redux/Reducers-Redux/authSlice";
@@ -12,7 +11,6 @@ import { displayModal } from "Redux/Reducers-Redux/notesSlice";
 function LeftAside() {
   const currentUser = useSelector((state) => state?.auth?.currentUser);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   return (
     <aside className={`${styles.banner} `}>
       <div className={styles.bannerSmall}>
@@ -70,12 +68,10 @@ function LeftAside() {
                   </NavLink>
 
                   <button
-                    className="btn  px-1.5 py-1.5 ml-1.5"
+                    className="btn btn-outline-pri mx-1 ml-7 my-1 px-2 py-1 text-2 btn-sec rounded-xl "
                     onClick={() => dispatch(displayModal())}
                   >
-                    <span className={` ${styles.navigation_text}`}>
-                      Add Note
-                    </span>
+                    Add Note
                   </button>
                 </nav>
               </div>

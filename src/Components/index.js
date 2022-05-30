@@ -4,7 +4,10 @@ export * from "./CustomRoutes/PrivateRoute";
 export * from "./CustomRoutes/RestrictedRoute";
 export * from "./Footer/Footer";
 export * from "./LeftAside/LeftAside";
-export * from "./RightAside/RightAside";
-export * from "./PinnedNote/PinnedNote"
 export * from "./Note/Note";
 export * from "./Search/Search";
+export * from "./AddNoteModal/AddNoteModal";
+export * from "./Chips/Chips";
+export * from "./EditNoteModal/EditNoteModal";
+export * from "./TagInput/TagInput";
+export * from "./TextEditor/TextEditor";

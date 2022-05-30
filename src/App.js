@@ -4,8 +4,6 @@ import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { AllRoutes } from "AllRoutes";
 import { checkToken } from "Redux/Reducers-Redux/authSlice";
-import AddNoteModal from "Components/AddNoteModal/AddNoteModal";
-import TextEditor from "Components/TextEditor/TextEditor";
 import {
   postNote,
   displayModal,
@@ -13,8 +11,7 @@ import {
   getAllArchives,
   getAllTrash,
 } from "Redux/Reducers-Redux/notesSlice";
-import { TagInput } from "Components/TagInput/TagInput";
-import EditNoteModal from "Components/EditNoteModal/EditNoteModal";
+import { TagInput, AddNoteModal, TextEditor, EditNoteModal } from "Components";
 function App() {
   const dispatch = useDispatch();
   const modalDisplay = useSelector((state) => state?.notes?.modalDisplay);

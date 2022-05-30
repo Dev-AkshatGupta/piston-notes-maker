@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { displayEditModal } from "Redux/Reducers-Redux/notesSlice";
 import { useDispatch, useSelector } from "react-redux";
-import TextEditor from "Components/TextEditor/TextEditor";
-import { TagInput } from "Components/TagInput/TagInput";
+import { TextEditor, TagInput } from "Components";
 import {editNote} from "Redux/Reducers-Redux/notesSlice";
 const EditNoteModal = ({}) => {
   const dispatch = useDispatch();
@@ -147,4 +146,4 @@ const EditNoteModal = ({}) => {
   );
 };
 
-export default EditNoteModal;
+export {EditNoteModal};

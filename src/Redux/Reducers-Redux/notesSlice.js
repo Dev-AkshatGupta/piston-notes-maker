@@ -15,7 +15,7 @@ const initialState = {
   editModalDisplay: false,
   noteForEdit: {},
 };
-// Please ignore all the consoles on the page these all the functions need to be checked
+
 
 export const getUsersData = createAsyncThunk(
   "notes/getUserData",
@@ -74,7 +74,6 @@ export const postNote = createAsyncThunk(
   }
 );
 
-// This is yet to do
 export const editNote = createAsyncThunk(
   "notes/editNote",
   async (details, { rejectWithValue }) => {
@@ -89,7 +88,6 @@ export const editNote = createAsyncThunk(
           headers: { authorization: encodedToken },
         }
       );
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error);
