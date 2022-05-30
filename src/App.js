@@ -14,9 +14,11 @@ import {
   getAllTrash,
 } from "Redux/Reducers-Redux/notesSlice";
 import { TagInput } from "Components/TagInput/TagInput";
+import EditNoteModal from "Components/EditNoteModal/EditNoteModal";
 function App() {
   const dispatch = useDispatch();
   const modalDisplay = useSelector((state) => state?.notes?.modalDisplay);
+  const editModalDisplay = useSelector((state) => state?.notes?.editModalDisplay);
   const [content, setContent] = useState("");
   const [noteTitle, setNoteTitle] = useState("");
   const [noteTags, setNoteTags] = useState([]);
@@ -87,6 +89,7 @@ function App() {
           </button>
         </AddNoteModal>
       )}
+      {editModalDisplay && <EditNoteModal/>}
     </div>
   );
 }

@@ -12,6 +12,8 @@ const initialState = {
   modalDisplay: false,
   archive: [],
   trash: [],
+  editModalDisplay: false,
+  noteForEdit: {},
 };
 // Please ignore all the consoles on the page these all the functions need to be checked
 
@@ -76,9 +78,10 @@ export const postNote = createAsyncThunk(
 export const editNote = createAsyncThunk(
   "notes/editNote",
   async (details, { rejectWithValue }) => {
-    const { notesId,note } = details;
+    const { notesId, note } = details;
     try {
       const encodedToken = localStorage.getItem("token");
+      console.log(details);
       const { data } = await axios.post(
         `/api/notes/${notesId}`,
         {note:note},
@@ -191,8 +194,6 @@ export const deleteFromArchive = createAsyncThunk(
   }
 );
 
-// functions for the trash page
-
 export const getAllTrash = createAsyncThunk(
   "notes/getAllTrash",
   async (_, { rejectWithValue }) => {
@@ -273,6 +274,12 @@ const notesSlice = createSlice({
     displayModal(state) {
       state.modalDisplay = !state.modalDisplay;
     },
+    displayEditModal(state) {
+      state.editModalDisplay = !state.editModalDisplay;
+    },
+    getNoteToEdit(state, action) {
+      state.noteForEdit = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -303,7 +310,9 @@ const notesSlice = createSlice({
       })
       .addCase(postNote.rejected, (state, action) => {})
       .addCase(editNote.pending, (state, action) => {})
-      .addCase(editNote.fulfilled, (state, action) => {})
+      .addCase(editNote.fulfilled, (state, action) => {
+         state.allNotes = action.payload.notes;
+      })
       .addCase(editNote.rejected, (state, action) => {})
       .addCase(deleteNote.pending, (state, action) => {})
       .addCase(deleteNote.fulfilled, (state, action) => {
@@ -357,6 +366,7 @@ const notesSlice = createSlice({
   },
 });
 
-export const { displayModal } = notesSlice.actions;
+export const { displayModal, getNoteToEdit, displayEditModal } =
+  notesSlice.actions;
 
 export default notesSlice.reducer;

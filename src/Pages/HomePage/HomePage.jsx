@@ -5,7 +5,13 @@ import { AiOutlinePushpin, AiFillPushpin } from "react-icons/ai";
 import { FiInbox } from "react-icons/fi";
 import { ImBin, ImCross } from "react-icons/im";
 import { useDispatch } from "react-redux";
-import { deleteNote, postNoteToArchive ,postNoteToTrash} from "Redux/Reducers-Redux/notesSlice";
+import {
+  deleteNote,
+  postNoteToArchive,
+  postNoteToTrash,
+  displayEditModal,
+  getNoteToEdit,
+} from "Redux/Reducers-Redux/notesSlice";
 const HomePage = () => {
   const notesArr = useSelector((state) => state.notes.allNotes);
   const dispatch = useDispatch();
@@ -24,7 +30,10 @@ const HomePage = () => {
               </p>
               <div className="flex justify-evenly w-3/5">
                 <div className="w-8 h-8 rounded-full bg-gray-500 text-white flex items-center justify-center">
-                  <button>
+                  <button onClick={()=>{
+                    dispatch(displayEditModal());
+                    dispatch(getNoteToEdit(noteObj));
+                  }}>
                     <img
                       src="https://tuk-cdn.s3.amazonaws.com/can-uploader/single_card_with_title_and_description-svg1.svg"
                       alt="icon"
