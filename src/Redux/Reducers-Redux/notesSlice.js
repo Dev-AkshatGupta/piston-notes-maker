@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Note } from "Components";
 import { notifyError, notifyWarn } from "Utilities/Notifications";
 
 const initialState = {
@@ -8,9 +9,11 @@ const initialState = {
     getUserDataLoading: false,
   },
   allNotes: [],
-  modalDisplay:false
+  modalDisplay: false,
+  archive: [],
+  trash: [],
 };
-// Please ignore all the conoles on the page these all the functions need to be checked
+// Please ignore all the consoles on the page these all the functions need to be checked
 
 export const getUsersData = createAsyncThunk(
   "notes/getUserData",
@@ -24,7 +27,6 @@ export const getUsersData = createAsyncThunk(
           headers: { authorization: encodedToken },
         }
       );
-      console.log(data);
       return data.user;
     } catch (error) {
       notifyWarn(error.response.data.errors[0]);
@@ -38,14 +40,9 @@ export const getAllNotes = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const encodedToken = localStorage.getItem("token");
-      const { data } = await axios.get(
-        "/api/notes",
-        {},
-        {
-          headers: { authorization: encodedToken },
-        }
-      );
-      console.log(data);
+      const { data } = await axios.get("/api/notes", {
+        headers: { authorization: encodedToken },
+      });
       return data;
     } catch (error) {
       notifyError(error.response.data.errors[0]);
@@ -59,7 +56,7 @@ export const postNote = createAsyncThunk(
   async (details, { rejectWithValue }) => {
     try {
       const encodedToken = localStorage.getItem("token");
-      console.log(details);
+
       const { data } = await axios.post(
         "/api/notes",
         { note: details },
@@ -67,8 +64,7 @@ export const postNote = createAsyncThunk(
           headers: { authorization: encodedToken },
         }
       );
-      console.log(data.notes);
-      // return data;
+      return data;
     } catch (error) {
       notifyError(error.response.data.errors[0]);
       console.log(error.response);
@@ -76,15 +72,16 @@ export const postNote = createAsyncThunk(
   }
 );
 
+// This is yet to do
 export const editNote = createAsyncThunk(
   "notes/editNote",
   async (details, { rejectWithValue }) => {
-    const { notesId } = details;
+    const { notesId,note } = details;
     try {
       const encodedToken = localStorage.getItem("token");
       const { data } = await axios.post(
         `/api/notes/${notesId}`,
-        {},
+        {note:note},
         {
           headers: { authorization: encodedToken },
         }
@@ -103,11 +100,12 @@ export const deleteNote = createAsyncThunk(
   async (details, { rejectWithValue }) => {
     try {
       const { notesId } = details;
-      const encodedToken = localStorage.get("token");
+
+      const encodedToken = localStorage.getItem("token");
       const { data } = await axios.delete(`/api/notes/${notesId}`, {
         headers: { authorization: encodedToken },
       });
-      console.log(data);
+
       return data;
     } catch (error) {
       console.log(error);
@@ -120,8 +118,10 @@ export const getAllArchives = createAsyncThunk(
   "notes/getAllArchives",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get("/api/archives");
-      console.log(data);
+      const encodedToken = localStorage.getItem("token");
+      const { data } = await axios.get("/api/archives", {
+        headers: { authorization: encodedToken },
+      });
       return data;
     } catch (error) {
       notifyWarn(error.response.data.errors[0]);
@@ -134,10 +134,10 @@ export const postNoteToArchive = createAsyncThunk(
   "notes/postNoteToArchive",
   async (details, { rejectWithValue }) => {
     try {
-      const encodedToken = localStorage.get("token");
-      const { noteId, note } = details;
+      const encodedToken = localStorage.getItem("token");
+      const { notesId, note } = details;
       const { data } = await axios.post(
-        `/api/archives/delete/${noteId}`,
+        `/api/notes/archives/${notesId}`,
         {
           note: note,
         },
@@ -145,7 +145,6 @@ export const postNoteToArchive = createAsyncThunk(
           headers: { authorization: encodedToken },
         }
       );
-      console.log(data);
       return data;
     } catch (error) {
       notifyWarn(error.response.data.errors[0]);
@@ -158,16 +157,15 @@ export const restoreNoteFromArchive = createAsyncThunk(
   "notes/restoreNoteFromArchive",
   async (details, { rejectWithValue }) => {
     try {
-      const encodedToken = localStorage.get("token");
-      const { noteId } = details;
+      const encodedToken = localStorage.getItem("token");
+      const { notesId } = details;
       const { data } = await axios.post(
-        `/api/archives/restore/${noteId}`,
+        `/api/archives/restore/${notesId}`,
         {},
         {
           headers: { authorization: encodedToken },
         }
       );
-      console.log(data);
       return data;
     } catch (error) {
       notifyWarn(error.response.data.errors[0]);
@@ -180,12 +178,11 @@ export const deleteFromArchive = createAsyncThunk(
   "notes/deleteFromArchive",
   async (details, { rejectWithValue }) => {
     try {
-      const encodedToken = localStorage.get("token");
-      const { noteId } = details;
-      const { data } = await axios.delete(`/api/archives/delete/${noteId}`, {
+      const encodedToken = localStorage.getItem("token");
+      const { notesId } = details;
+      const { data } = await axios.delete(`/api/archives/delete/${notesId}`, {
         headers: { authorization: encodedToken },
       });
-      console.log(data);
       return data;
     } catch (error) {
       notifyWarn(error.response.data.errors[0]);
@@ -201,14 +198,9 @@ export const getAllTrash = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const encodedToken = localStorage.getItem("token");
-      const { data } = await axios.get(
-        "/api/trash",
-        {},
-        {
-          headers: { authorization: encodedToken },
-        }
-      );
-      console.log(data);
+      const { data } = await axios.get("/api/trash", {
+        headers: { authorization: encodedToken },
+      });
       return data;
     } catch (error) {
       notifyWarn(error.response.data.errors[0]);
@@ -221,18 +213,17 @@ export const postNoteToTrash = createAsyncThunk(
   "notes/postNoteToTrash",
   async (details, { rejectWithValue }) => {
     try {
-      const { noteId } = details;
+      const { notesId, note } = details;
       const encodedToken = localStorage.getItem("token");
       const { data } = await axios.post(
-        `/notes/trash/${noteId}`,
-        {},
-        { headeres: { authorization: encodedToken } }
+        `/api/notes/trash/${notesId}`,
+        { note: note },
+        { headers: { authorization: encodedToken } }
       );
-      console.log(data);
       return data;
     } catch (error) {
       notifyWarn(error.response.data.errors[0]);
-      console.log(error);
+      console.log(error.response.data.errors[0]);
     }
   }
 );
@@ -241,16 +232,15 @@ export const restoreNoteFromTrash = createAsyncThunk(
   "notes/restoreNoteFromTrash",
   async (details, { rejectWithValue }) => {
     try {
-      const { noteId } = details;
+      const { notesId } = details;
       const encodedToken = localStorage.getItem("token");
       const { data } = await axios.post(
-        `/api/trash/restore/${noteId}`,
+        `/api/trash/restore/${notesId}`,
         {},
         {
           headers: { authorization: encodedToken },
         }
       );
-      console.log(data);
       return data;
     } catch (error) {
       notifyWarn(error.response.data.errors[0]);
@@ -263,12 +253,11 @@ export const deleteNoteFromTrash = createAsyncThunk(
   "notes/deleteNoteFromTrash",
   async (details, { rejectWithValue }) => {
     try {
-      const { noteId } = details;
+      const { notesId } = details;
       const encodedToken = localStorage.getItem("token");
-      const { data } = await axios.delete(`/api/trash/delete/${noteId}`, {
+      const { data } = await axios.delete(`/api/trash/delete/${notesId}`, {
         headers: { authorization: encodedToken },
       });
-      console.log(data);
       return data;
     } catch (error) {
       notifyWarn(error.response.data.errors[0]);
@@ -281,9 +270,9 @@ const notesSlice = createSlice({
   name: "notes",
   initialState,
   reducers: {
-    displayModal(state){
-state.modalDisplay=!state.modalDisplay;
-    }
+    displayModal(state) {
+      state.modalDisplay = !state.modalDisplay;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -303,43 +292,67 @@ state.modalDisplay=!state.modalDisplay;
       })
       .addCase(getAllNotes.fulfilled, (state, action) => {
         state.loadingStates.getAllNotesLoading = false;
-        state.allNotes = action.payload;
+        state.allNotes = action.payload.notes;
       })
       .addCase(getAllNotes.rejected, (state, action) => {
         state.loadingStates.getAllNotesLoading = false;
       })
       .addCase(postNote.pending, (state, action) => {})
-      .addCase(postNote.fulfilled, (state, action) => {})
+      .addCase(postNote.fulfilled, (state, action) => {
+        state.allNotes = action.payload.notes;
+      })
       .addCase(postNote.rejected, (state, action) => {})
       .addCase(editNote.pending, (state, action) => {})
       .addCase(editNote.fulfilled, (state, action) => {})
       .addCase(editNote.rejected, (state, action) => {})
       .addCase(deleteNote.pending, (state, action) => {})
-      .addCase(deleteNote.fulfilled, (state, action) => {})
+      .addCase(deleteNote.fulfilled, (state, action) => {
+        state.allNotes = action.payload.notes;
+      })
       .addCase(deleteNote.rejected, (state, action) => {})
       .addCase(getAllArchives.pending, (state, action) => {})
-      .addCase(getAllArchives.fulfilled, (state, action) => {})
+      .addCase(getAllArchives.fulfilled, (state, action) => {
+        state.archive = action.payload.archives;
+      })
       .addCase(getAllArchives.rejected, (state, action) => {})
       .addCase(postNoteToArchive.pending, (state, action) => {})
-      .addCase(postNoteToArchive.fulfilled, (state, action) => {})
+      .addCase(postNoteToArchive.fulfilled, (state, action) => {
+        state.archive = action.payload.archives;
+        state.allNotes = action.payload.notes;
+      })
       .addCase(postNoteToArchive.rejected, (state, action) => {})
       .addCase(restoreNoteFromArchive.pending, (state, action) => {})
-      .addCase(restoreNoteFromArchive.fulfilled, (state, action) => {})
+      .addCase(restoreNoteFromArchive.fulfilled, (state, action) => {
+        state.archive = action.payload.archives;
+        state.allNotes = action.payload.notes;
+      })
       .addCase(restoreNoteFromArchive.rejected, (state, action) => {})
       .addCase(deleteFromArchive.pending, (state, action) => {})
-      .addCase(deleteFromArchive.fulfilled, (state, action) => {})
+      .addCase(deleteFromArchive.fulfilled, (state, action) => {
+        state.archive = action.payload.archives;
+      })
       .addCase(deleteFromArchive.rejected, (state, action) => {})
       .addCase(getAllTrash.pending, (state, action) => {})
-      .addCase(getAllTrash.fulfilled, (state, action) => {})
+      .addCase(getAllTrash.fulfilled, (state, action) => {
+        state.trash = action.payload.trash;
+      })
       .addCase(getAllTrash.rejected, (state, action) => {})
       .addCase(postNoteToTrash.pending, (state, action) => {})
-      .addCase(postNoteToTrash.fulfilled, (state, action) => {})
+      .addCase(postNoteToTrash.fulfilled, (state, action) => {
+        state.trash = action.payload.trash;
+        state.allNotes = action.payload.notes;
+      })
       .addCase(postNoteToTrash.rejected, (state, action) => {})
       .addCase(restoreNoteFromTrash.pending, (state, action) => {})
-      .addCase(restoreNoteFromTrash.fulfilled, (state, action) => {})
+      .addCase(restoreNoteFromTrash.fulfilled, (state, action) => {
+        state.trash = action.payload.trash;
+        state.allNotes = action.payload.notes;
+      })
       .addCase(restoreNoteFromTrash.rejected, (state, action) => {})
       .addCase(deleteNoteFromTrash.pending, (state, action) => {})
-      .addCase(deleteNoteFromTrash.fulfilled, (state, action) => {})
+      .addCase(deleteNoteFromTrash.fulfilled, (state, action) => {
+        state.trash = action.payload.trash;
+      })
       .addCase(deleteNoteFromTrash.rejected, (state, action) => {});
   },
 });

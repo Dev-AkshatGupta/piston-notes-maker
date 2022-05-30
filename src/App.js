@@ -6,17 +6,26 @@ import { AllRoutes } from "AllRoutes";
 import { checkToken } from "Redux/Reducers-Redux/authSlice";
 import AddNoteModal from "Components/AddNoteModal/AddNoteModal";
 import TextEditor from "Components/TextEditor/TextEditor";
-import { postNote, displayModal } from "Redux/Reducers-Redux/notesSlice";
-import {TagInput} from "Components/TagInput/TagInput";
-import { BsPalette } from "react-icons/bs";
+import {
+  postNote,
+  displayModal,
+  getAllNotes,
+  getAllArchives,
+  getAllTrash,
+} from "Redux/Reducers-Redux/notesSlice";
+import { TagInput } from "Components/TagInput/TagInput";
 function App() {
   const dispatch = useDispatch();
   const modalDisplay = useSelector((state) => state?.notes?.modalDisplay);
   const [content, setContent] = useState("");
   const [noteTitle, setNoteTitle] = useState("");
-  const [noteTags,setNoteTags]=useState([]);
+  const [noteTags, setNoteTags] = useState([]);
+  const [color, setColor] = useState({});
   useEffect(() => {
     dispatch(checkToken());
+    dispatch(getAllNotes());
+    dispatch(getAllArchives());
+    dispatch(getAllTrash());
   }, []);
   const location = useLocation();
   return (
@@ -25,6 +34,7 @@ function App() {
       <ToastContainer />
       {modalDisplay && (
         <AddNoteModal
+          setColor={setColor}
           textArea={<TextEditor content={content} setContent={setContent} />}
           noteTitle={noteTitle}
           setNoteTitle={setNoteTitle}
@@ -44,7 +54,6 @@ function App() {
           }
           tagInput={<TagInput arr={noteTags} setArr={setNoteTags} />}
         >
-
           <button
             className="
                   block
@@ -62,7 +71,12 @@ function App() {
                   "
             onClick={() => {
               dispatch(
-                postNote({ title: noteTitle, content: content, tags: noteTags })
+                postNote({
+                  title: noteTitle,
+                  content: content,
+                  tags: noteTags,
+                  color,
+                })
               );
               setContent("");
               setNoteTitle("");
