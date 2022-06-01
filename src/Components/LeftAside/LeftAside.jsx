@@ -48,7 +48,6 @@ function LeftAside() {
                     }
                   >
                     <span className={`${styles.navigation_svg} `}>
-                      {/* <i className="fal fa-bookmark mr-2"></i> */}
                       <AiOutlineInbox />
                     </span>
                     <span className={` ${styles.navigation_text}`}>

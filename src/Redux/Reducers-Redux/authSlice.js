@@ -21,6 +21,7 @@ export const login = createAsyncThunk("auth/login", async (userDetails) => {
     console.log(error.response);
   }
 });
+
 export const signUp = createAsyncThunk("auth/signUp", async (userDetails) => {
   try {
     const response = await axios.post(`/api/auth/signup`, {
