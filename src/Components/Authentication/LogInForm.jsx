@@ -38,25 +38,23 @@ function LogInForm({children}) {
         Log-in Form
       </h2>
       <div className="relative mb-4">
-        <label htmlFor="userName" className="leading-7 text-sm text-gray-600">
-          UserName
+        <label  className="leading-7 text-sm text-gray-600">
+         email
         </label>
         <input
-          type="userName"
-          id="userName"
-          name="userName"
+          type="text"
+          name="email"
           className="w-full bg-white rounded border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
           onChange={(e) => setDetails({ ...details, email: e.target.value })}
         />
       </div>
       <div className="relative mb-4">
-        <label htmlFor="Password" className="leading-7 text-sm text-gray-600">
+        <label  className="leading-7 text-sm text-gray-600">
           Password
         </label>
         <input
           type={!viewPassword ? "password" : "text"}
-          id="full-name"
-          name="full-name"
+          name="password"
           className="w-full bg-white rounded border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
           onChange={(e) => setDetails({ ...details, password: e.target.value })}
         />
