@@ -8,18 +8,20 @@ const initialState = {
 };
 
 export const login = createAsyncThunk("auth/login", async (userDetails) => {
+ 
   try {
     const response = await axios.post(`/api/auth/login`, {
-      username: userDetails.username,
+      email: userDetails.email,
       password: userDetails.password,
     });
-
+    
     return response.data;
   } catch (error) {
     notifyError(error.response.data.error[0]);
     console.log(error.response);
   }
 });
+
 export const signUp = createAsyncThunk("auth/signUp", async (userDetails) => {
   try {
     const response = await axios.post(`/api/auth/signup`, {
@@ -47,20 +49,7 @@ export const checkToken = createAsyncThunk("auth/checkToken", async () => {
     }
   }
 });
-export const editUser = createAsyncThunk("auth/editUser", async (userData) => {
-  try {
-    const encodedToken = localStorage.getItem("token");
-    const { data } = await axios.post(
-      `/api/users/edit`,
-      { userData },
-      { headers: { authorization: encodedToken } }
-    );
 
-    return data;
-  } catch (error) {
-    console.log(error.response);
-  }
-});
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -86,9 +75,6 @@ const authSlice = createSlice({
         if (action.payload) {
           state.currentUser = action.payload.user;
         }
-      })
-      .addCase(editUser.fulfilled, (state, action) => {
-        state.currentUser = action.payload;
       });
   },
 });

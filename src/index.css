@@ -286,3 +286,32 @@ html::-webkit-scrollbar-track {
 }
 .align-self-center{align-self:center}
 .aside-display{display: block;}
+
+
+/* page layout */
+.layout {
+  display: grid;
+  grid-template-columns: 275px auto 350px;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.layout__main{
+border-right: solid .25px var(--SLATE-300);
+margin-right: 2px;
+}
+
+
+/* Global components styles */
+.postInput__content-input {
+  width: 100%;
+  /* height: 10rem; */
+  border: 0px;
+  resize: none;
+  overflow-x: hidden;
+
+}
+
+.postInput__content-input:focus {
+  outline: none;
+}

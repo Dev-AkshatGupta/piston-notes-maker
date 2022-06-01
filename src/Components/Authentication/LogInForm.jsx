@@ -14,7 +14,7 @@ function LogInForm({children}) {
     /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
   function validateDetails(details) {
     if (
-      details.username === "" ||
+      details.email === "" ||
       details.password === ""
     ) {
       notifyError("Fill all the fields");
@@ -29,7 +29,6 @@ function LogInForm({children}) {
   function clickHandler(e) {
     //  to prevent initial refreshing of the page
     e.preventDefault();
-    console.log(passwordRegEx.test(details.password));
     if(validateDetails(details)){dispatch(login(details));}
   }
 
@@ -39,25 +38,23 @@ function LogInForm({children}) {
         Log-in Form
       </h2>
       <div className="relative mb-4">
-        <label htmlFor="userName" className="leading-7 text-sm text-gray-600">
-          UserName
+        <label  className="leading-7 text-sm text-gray-600">
+         email
         </label>
         <input
-          type="userName"
-          id="userName"
-          name="userName"
+          type="text"
+          name="email"
           className="w-full bg-white rounded border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-          onChange={(e) => setDetails({ ...details, username: e.target.value })}
+          onChange={(e) => setDetails({ ...details, email: e.target.value })}
         />
       </div>
       <div className="relative mb-4">
-        <label htmlFor="Password" className="leading-7 text-sm text-gray-600">
+        <label  className="leading-7 text-sm text-gray-600">
           Password
         </label>
         <input
           type={!viewPassword ? "password" : "text"}
-          id="full-name"
-          name="full-name"
+          name="password"
           className="w-full bg-white rounded border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
           onChange={(e) => setDetails({ ...details, password: e.target.value })}
         />
@@ -85,7 +82,9 @@ function LogInForm({children}) {
         className="btn btn-outline-pri  py-2 px-8  rounded text-lg mt-1.5"
         onClick={(e) => {
           e.preventDefault();
-          dispatch(login({ username: "akshat", password: "akshat" }));
+          dispatch(
+            login({ email: "akshat@google.com", password: "akshat" })
+          );
         }}
       >
         Guest Log-In

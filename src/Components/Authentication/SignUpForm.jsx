@@ -3,7 +3,7 @@ import "./authentication.css";
 import { useDispatch } from "react-redux";
 import { signUp } from "Redux/Reducers-Redux/authSlice";
 import { notifyError } from "./../../Utilities/Notifications";
-import { validate } from "uuid";
+
 function SignUpForm({ children }) {
   const [details, setDetails] = useState({
     name: "",
