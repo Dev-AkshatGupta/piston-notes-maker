@@ -21,19 +21,23 @@ const HomePage = () => {
         <LeftAside />
       </div>
       <div className="layout__main relative">
-        <Search />
+        {/* todo */}
+        {/* <Search /> */}
         {notesArr.map((noteObj) => (
           <Note noteObj={noteObj}>
+            console.log(notesObj)
             <div className="flex items-center justify-between text-gray-800 justify-between">
               <p className="focus:outline-none text-sm dark:text-gray-100">
                 March 28, 2020
               </p>
               <div className="flex justify-evenly w-3/5">
                 <div className="w-8 h-8 rounded-full bg-gray-500 text-white flex items-center justify-center">
-                  <button onClick={()=>{
-                    dispatch(displayEditModal());
-                    dispatch(getNoteToEdit(noteObj));
-                  }}>
+                  <button
+                    onClick={() => {
+                      dispatch(displayEditModal());
+                      dispatch(getNoteToEdit(noteObj));
+                    }}
+                  >
                     <img
                       src="https://tuk-cdn.s3.amazonaws.com/can-uploader/single_card_with_title_and_description-svg1.svg"
                       alt="icon"

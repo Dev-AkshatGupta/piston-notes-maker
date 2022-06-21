@@ -17,7 +17,8 @@ const ArchivePage = () => {
         <LeftAside />
       </div>
       <div className="layout__main relative">
-        <Search />
+        {/* todo */}
+        {/* <Search /> */}{" "}
         {archive.map((noteObj) => (
           <Note noteObj={noteObj}>
             <div className="flex items-center justify-between text-gray-800 justify-between">
